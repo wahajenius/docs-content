@@ -9,13 +9,13 @@ tags: [Shift Registers]
 
 At sometime or another you may run out of pins on your Arduino board and need to extend it with shift registers. This example is based on the 74HC595. The datasheet refers to the 74HC595 as an "8-bit serial-in, serial or parallel-out shift register with output latches; 3-state." In other words,  you can use it to control 8 outputs at a time while only taking up a few pins on your microcontroller. You can link multiple registers together to extend your output even more. (Users may also wish to search for other driver chips with "595" or "596" in their part numbers, there are many. The STP16C596 for example will drive 16 LED's and eliminates the series resistors with built-in constant current sources.)
 
-How this all works is through something called "synchronous serial communication," i.e. you can pulse one pin up and down thereby communicating a data byte to the register bit by bit.  It's by pulsing second pin, the clock pin, that you delineate between bits. This is in contrast to using the "asynchronous serial communication" of the Serial.begin() function which relies on the sender and the receiver to be set independently to an agreed upon specified data rate. Once the whole byte is transmitted to the register the HIGH or LOW messages held in each bit get parceled out to each of the individual output pins.  This is the "parallel output" part, having all the pins do what you want them to do all at once.
+How this all works is through something called "synchronous serial communication," i.e. you can pulse one pin up and down thereby communicating a data byte to the register bit by bit.  It's by pulsing a second pin, the clock pin, that you delineate between bits. This is in contrast to using the "asynchronous serial communication" of the Serial.begin() function which relies on the sender and the receiver to be set independently to an agreed upon specified data rate. Once the whole byte is transmitted to the register the HIGH or LOW messages held in each bit get parceled out to each of the individual output pins.  This is the "parallel output" part, having all the pins do what you want them to do all at once.
 
 The "serial output" part of this component comes from its extra pin which can pass the serial information received from the microcontroller out again unchanged. This means you can transmit 16 bits in a row (2 bytes) and the first 8 will flow through the first register into the second register and be expressed there. You can learn to do that from the second example.
 
-"3 states" refers to the fact that you can set the output pins as either high, low or "[high impedance](http://en.wikipedia.org/wiki/High_impedance)." Unlike the HIGH and LOW states, you can"t set pins to their high impedance state individually.  You can only set the whole chip together. This is a pretty specialized thing to do -- Think of an LED array that might need to be controlled by completely different microcontrollers depending on a specific mode setting built into your project.  Neither example takes advantage of this feature and you won"t usually need to worry about getting a chip that has it.
+"3 states" refers to the fact that you can set the output pins as either high, low or "[high impedance](http://en.wikipedia.org/wiki/High_impedance)." Unlike the HIGH and LOW states, you can't set pins to their high impedance state individually.  You can only set the whole chip together. This is a pretty specialized thing to do -- think of an LED array that might need to be controlled by completely different microcontrollers depending on a specific mode setting built into your project.  Neither example takes advantage of this feature and you won't usually need to worry about getting a chip that has it.
 
-**Here is a table explaining the pin-outs adapted from the [Phillip's datasheet](https://www.arduino.cc/en/uploads/Tutorial/595datasheet.pdf).**
+**Here is a table explaining the pin-outs adapted from the [Philips datasheet](https://www.arduino.cc/en/uploads/Tutorial/595datasheet.pdf).**
 
 ![](assets/595_pin_diagram.png)
 
@@ -60,13 +60,13 @@ This set up makes all of the output pins active and addressable all the time.  T
 
 - ST_CP (pin 12) to Ardunio DigitalPin 8 (green wire)
 
-From now on those will be referred to as the dataPin, the clockPin and the latchPin respectively.  Notice the 0.1"f capacitor on the latchPin, if you have some flicker when the latch pin pulses you can use a capacitor to even it out.
+From now on those will be referred to as the dataPin, the clockPin and the latchPin respectively.  Notice the 0.1 µF capacitor on the latchPin, if you have some flicker when the latch pin pulses you can use a capacitor to even it out.
 
 ![](assets/ShftOutExmp1_2.gif)
 
 ### 3. Add 8 LEDs.
 
-In this case you should connect the cathode (short pin) of each LED to a common ground, and the anode (long pin) of each LED to its respective shift register output pin.  Using the shift register to supply power like this is called *sourcing current.* Some shift registers can't source current, they can only do what is called *sinking current.*  If you have one of those it means you will have to flip the direction of the LEDs, putting the anodes directly to power and the cathodes (ground pins) to the shift register outputs. You should check the your specific datasheet if you aren't using a 595 series chip. Don't forget to add a 470-ohm resistor in series to protect the LEDs from being overloaded.
+In this case you should connect the cathode (short pin) of each LED to a common ground, and the anode (long pin) of each LED to its respective shift register output pin.  Using the shift register to supply power like this is called *sourcing current.* Some shift registers can't source current, they can only do what is called *sinking current.*  If you have one of those it means you will have to flip the direction of the LEDs, putting the anodes directly to power and the cathodes to the shift register outputs. You should check the your specific datasheet if you aren't using a 595 series chip. Don't forget to add a 470-ohm resistor in series to protect the LEDs from being overloaded.
 
 ![](assets/ShftOutExmp1_3.gif)
 
@@ -86,7 +86,7 @@ Here are three code examples. The first is just some "hello world" code that sim
 [![logic table](./595_timing_diagram.png)](https://www.arduino.cc/en/uploads/Tutorial/595_timing_diagram.png)
 
 
-The code is based on  two pieces of information in the datasheet: the timing diagram and the logic table.  The logic table is what tells you that basically everything important happens on an up beat. When the clockPin goes from low to high, the shift register reads the state of the data pin. As the data gets shifted in it is saved in an internal memory register. When the latchPin goes from low to high the sent data gets moved from the shift register's aforementioned memory register into the output pins, lighting the LEDs.
+The code is based on two pieces of information in the datasheet: the timing diagram and the logic table.  The logic table is what tells you that basically everything important happens on an up beat. When the clockPin goes from low to high, the shift register reads the state of the data pin. As the data gets shifted in it is saved in an internal memory register. When the latchPin goes from low to high the sent data gets moved from the shift register's aforementioned memory register into the output pins, lighting the LEDs.
 
 - [Code Sample 1.1 Hello World](#shftout11)
 - [Code Sample 1.2 One by One](#shftout12)
