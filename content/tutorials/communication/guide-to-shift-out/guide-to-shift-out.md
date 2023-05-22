@@ -86,7 +86,7 @@ Here are three code examples. The first is just some "hello world" code that sim
 [![logic table](./595_timing_diagram.png)](https://www.arduino.cc/en/uploads/Tutorial/595_timing_diagram.png)
 
 
-The code is based on  two pieces of information in the datasheet: the timing diagram and the logic table.  The logic table is what tells you that basically everything important happens on an up beat. When the clockPin goes from low to high, the shift register reads the state of the data pin. As the data gets shifted in it is saved in an internal memory register. When the latchPin goes from low to high the sent data gets moved from the shift registers aforementioned memory register into the output pins, lighting the LEDs.
+The code is based on  two pieces of information in the datasheet: the timing diagram and the logic table.  The logic table is what tells you that basically everything important happens on an up beat. When the clockPin goes from low to high, the shift register reads the state of the data pin. As the data gets shifted in it is saved in an internal memory register. When the latchPin goes from low to high the sent data gets moved from the shift register's aforementioned memory register into the output pins, lighting the LEDs.
 
 - [Code Sample 1.1 Hello World](#shftout11)
 - [Code Sample 1.2 One by One](#shftout12)
@@ -104,7 +104,7 @@ Starting from the previous example, you should put a second shift register on th
 
 ![](assets/ShftOutExmp2_1.gif)
 
-### 2. Connect  the 2 registers.
+### 2. Connect the 2 registers.
 
 Two of these connections simply extend the same clock and latch signal from the Arduino to the second shift register (yellow and green wires).  The blue wire is going from the serial out pin (pin 9) of the first shift register to the serial data input (pin 14) of the second register.
 
@@ -112,7 +112,7 @@ Two of these connections simply extend the same clock and latch signal from the 
 
 ### 3. Add a second set of LEDs.
 
-In this case I added green ones so when reading the code it is clear which byte is going to which set of LEDs
+In this case I added green ones so when reading the code it is clear which byte is going to which set of LEDs.
 
 ![](assets/ShftOutExmp2_3.gif)
 
@@ -122,13 +122,13 @@ In this case I added green ones so when reading the code it is clear which byte 
 
 ## The Code
 
-Here again are  three code samples. If you are curious, you might want to try the samples from the first example with this circuit set up just to see what happens.
+Here again are three code samples. If you are curious, you might want to try the samples from the first example with this circuit set up just to see what happens.
 
 [Code Sample 2.1  Dual Binary Counters](#shftout21)
-There is only one extra line of code compared to the first code sample from Example 1. It sends out a second byte. This forces the first shift register, the one directly attached to the Arduino,  to pass the first byte sent through to the second register, lighting the green LEDs. The second byte will then show up on the red LEDs.
+There is only one extra line of code compared to the first code sample from Example 1. It sends out a second byte. This forces the first shift register, the one directly attached to the Arduino, to pass the first byte sent through to the second register, lighting the green LEDs. The second byte will then show up on the red LEDs.
 
 [Code Sample 2.2  2 Byte One By One](#shftout22)
-Comparing this code to the similar code from Example 1 you see that a little bit more has had to change.  The blinkAll() function has been changed to the blinkAll_2Bytes() function to reflect the fact that now there are 16 LEDs to control.  Also, in version 1 the pulsings of the latchPin were situated inside the subfunctions lightShiftPinA and lightShiftPinB(). Here they need to be moved back into the main loop to accommodate needing to run each subfunction twice in a row, once for the green LEDs and once for the red ones.
+Comparing this code to the similar code from Example 1 you see that a little bit more has had to change. The blinkAll() function has been changed to the blinkAll_2Bytes() function to reflect the fact that now there are 16 LEDs to control. Also, in version 1 the pulsings of the latchPin were situated inside the subfunctions lightShiftPinA() and lightShiftPinB(). Here they need to be moved back into the main loop to accommodate needing to run each subfunction twice in a row, once for the green LEDs and once for the red ones.
 
 [Code Sample 2.3 - Dual Defined  Arrays](#shftout23)
 Like sample 2.2, sample 2.3 also takes advantage of the new blinkAll_2bytes() function.  2.3's big difference from sample 1.3 is only that instead of just a single variable called "data" and a single array called "dataArray" you have to have a dataRED, a dataGREEN, dataArrayRED, dataArrayGREEN defined up front.   This means that line
