@@ -13,9 +13,9 @@ How this all works is through something called "synchronous serial communication
 
 The "serial output" part of this component comes from its extra pin which can pass the serial information received from the microcontroller out again unchanged. This means you can transmit 16 bits in a row (2 bytes) and the first 8 will flow through the first register into the second register and be expressed there. You can learn to do that from the second example.
 
-"3 states" refers to the fact that you can set the output pins as either high, low or "[high impedance](http://en.wikipedia.org/wiki/High_impedance)." Unlike the HIGH and LOW states, you can"t set pins to their high impedance state individually.  You can only set the whole chip together. This is a pretty specialized thing to do -- Think of an LED array that might need to be controlled by completely different microcontrollers depending on a specific mode setting built into your project.  Neither example takes advantage of this feature and you won"t usually need to worry about getting a chip that has it.
+"3 states" refers to the fact that you can set the output pins as either high, low or "[high impedance](http://en.wikipedia.org/wiki/High_impedance)." Unlike the HIGH and LOW states, you can't set pins to their high impedance state individually. You can only set the whole chip together. This is a pretty specialized thing to do -- think of an LED array that might need to be controlled by completely different microcontrollers depending on a specific mode setting built into your project.  Neither example takes advantage of this feature and you won't usually need to worry about getting a chip that has it.
 
-**Here is a table explaining the pin-outs adapted from the [Phillip's datasheet](https://www.arduino.cc/en/uploads/Tutorial/595datasheet.pdf).**
+**Here is a table explaining the pin-outs adapted from the [Philips datasheet](https://www.arduino.cc/en/uploads/Tutorial/595datasheet.pdf).**
 
 ![](assets/595_pin_diagram.png)
 
@@ -48,7 +48,7 @@ Make the following connections:
 
 - MR (pin 10) to 5V
 
-This set up makes all of the output pins active and addressable all the time.  The one flaw of this set up is that you end up with the lights turning on to their last state or something arbitrary every time you first power up the circuit before the program starts to run. You can get around this by controlling the MR and OE pins from your Arduino board too, but this way will work and leave you with more open pins.
+This set up makes all of the output pins active and addressable all the time.  The one flaw of this setup is that you end up with the lights turning on to their last state or something arbitrary every time you first power up the circuit before the program starts to run. You can get around this by controlling the MR and OE pins from your Arduino board too, but this way will work and leave you with more open pins.
 
 ![](assets/ShftOutExmp1_1.gif)
 
@@ -60,7 +60,7 @@ This set up makes all of the output pins active and addressable all the time.  T
 
 - ST_CP (pin 12) to Ardunio DigitalPin 8 (green wire)
 
-From now on those will be referred to as the dataPin, the clockPin and the latchPin respectively.  Notice the 0.1"f capacitor on the latchPin, if you have some flicker when the latch pin pulses you can use a capacitor to even it out.
+From now on those will be referred to as the dataPin, the clockPin and the latchPin respectively.  Notice the 0.1 µF capacitor on the latchPin, if you have some flicker when the latch pin pulses you can use a capacitor to even it out.
 
 ![](assets/ShftOutExmp1_2.gif)
 
